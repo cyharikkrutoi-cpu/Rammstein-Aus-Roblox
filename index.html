@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Rammstein Aus Roblox</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:ital,wght@0,300;0,400;0,600;1,300&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#080808;
+  --surface:#0f0f0f;
+  --red:#c0000a;
+  --red2:#8b0000;
+  --text:#e8e0d4;
+  --muted:#6a625a;
+  --border:rgba(192,0,10,0.25);
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'Barlow',sans-serif;font-weight:300;overflow-x:hidden;cursor:none}
+
+/* CURSOR */
+#cur{width:10px;height:10px;background:var(--red);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9999;transform:translate(-50%,-50%)}
+#cur-ring{width:34px;height:34px;border:1px solid var(--red);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);opacity:.45}
+
+/* NAV */
+nav{position:fixed;top:0;width:100%;z-index:100;padding:1.4rem 4rem;display:flex;justify-content:space-between;align-items:center;background:linear-gradient(to bottom,rgba(8,8,8,.97),transparent)}
+.nav-logo{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;letter-spacing:.1em;color:var(--red);text-decoration:none;line-height:1}
+.nav-links{display:flex;gap:2.5rem;list-style:none}
+.nav-links a{color:var(--muted);text-decoration:none;font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;transition:color .25s}
+.nav-links a:hover{color:var(--red)}
+
+/* HERO */
+#hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:0 4rem;position:relative;overflow:hidden}
+.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 60% 80% at 78% 50%,rgba(140,0,0,.2) 0%,transparent 70%),repeating-linear-gradient(90deg,rgba(192,0,10,.035) 0px,rgba(192,0,10,.035) 1px,transparent 1px,transparent 80px);pointer-events:none}
+.hero-scratch{position:absolute;right:0;top:0;bottom:0;width:40%;background:var(--surface);clip-path:polygon(14% 0,100% 0,100% 100%,0 100%);opacity:.5}
+.hero-eyebrow{font-size:.72rem;letter-spacing:.35em;text-transform:uppercase;color:var(--red);margin-bottom:1.2rem;opacity:0;animation:fadeUp .7s .3s forwards}
+.hero-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(3.5rem,9vw,8.5rem);line-height:.95;letter-spacing:.04em;opacity:0;animation:fadeUp .8s .45s forwards}
+.hero-title .accent{color:var(--red)}
+.hero-sub{margin-top:1.8rem;max-width:460px;font-size:1rem;line-height:1.85;color:var(--muted);opacity:0;animation:fadeUp .8s .6s forwards}
+.hero-cta{margin-top:2.8rem;display:inline-block;padding:.9rem 2.4rem;background:var(--red);color:#fff;text-decoration:none;font-size:.75rem;letter-spacing:.2em;text-transform:uppercase;font-weight:600;transition:background .3s,transform .2s;opacity:0;animation:fadeUp .8s .75s forwards;cursor:none}
+.hero-cta:hover{background:var(--red2);transform:translateX(5px)}
+
+/* HERO PHOTO — right side */
+.hero-photo{position:absolute;right:4rem;top:50%;transform:translateY(-50%);width:1067px;height:600px;overflow:hidden;clip-path:polygon(0 0,100% 0,100% 88%,88% 100%,0 100%);opacity:0;animation:fadeIn 1s .5s forwards}
+.hero-photo img{width:100%;height:100%;object-fit:cover;display:block}
+
+/* PHOTO PLACEHOLDER — shown when no real photo */
+.photo-ph{width:100%;height:100%;min-height:220px;background:var(--surface);border:1px dashed var(--border);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.7rem;color:var(--muted);font-size:.73rem;letter-spacing:.06em;text-align:center;padding:1.2rem}
+.photo-ph svg{width:30px;height:30px;stroke:var(--red);fill:none;flex-shrink:0}
+.photo-ph code{font-size:.65rem;opacity:.55;background:rgba(192,0,10,.08);padding:.2rem .5rem;border-radius:2px;font-family:monospace}
+
+/* DIVIDER */
+.fire-divider{width:100%;height:2px;background:linear-gradient(90deg,transparent,var(--red),var(--red2),var(--red),transparent)}
+
+/* SECTIONS */
+#about{background:var(--surface);padding:7rem 4rem}
+#gallery{background:var(--bg);padding:7rem 4rem}
+#contact{background:var(--surface);padding:7rem 4rem;text-align:center}
+.section-label{font-size:.68rem;letter-spacing:.32em;text-transform:uppercase;color:var(--red);margin-bottom:.8rem}
+.section-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.5rem,5vw,4.5rem);letter-spacing:.06em;line-height:1;margin-bottom:1.8rem}
+.section-title .accent{color:var(--red)}
+.section-body{font-size:1rem;line-height:1.9;color:var(--muted);max-width:560px}
+.divider{width:48px;height:2px;background:var(--red);margin:1.6rem 0}
+
+/* ABOUT GRID */
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center;margin-top:3rem}
+.about-photo{aspect-ratio:4/5;overflow:hidden;position:relative}
+.about-photo img{width:100%;height:100%;object-fit:cover;display:block}
+.about-photo::after{content:'';position:absolute;inset:0;border:1px solid var(--red);transform:translate(10px,10px);pointer-events:none;transition:transform .35s}
+.about-photo:hover::after{transform:translate(5px,5px)}
+
+/* MEMBERS ROW */
+.members{display:flex;gap:1.2rem;margin-top:2.5rem;flex-wrap:wrap}
+.member-card{flex:1;min-width:110px;background:var(--bg);border:1px solid var(--border);padding:1rem .8rem;text-align:center}
+.member-avatar{width:56px;height:56px;margin:0 auto .6rem;overflow:hidden}
+.member-avatar img{width:100%;height:100%;object-fit:cover;display:block}
+.member-name{font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:.08em;color:var(--text)}
+.member-role{font-size:.68rem;letter-spacing:.1em;color:var(--red);margin-top:.2rem;text-transform:uppercase}
+
+/* GALLERY GRID */
+.gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.8rem;margin-top:3rem}
+.g-item{overflow:hidden;position:relative;cursor:none}
+.g-item:nth-child(1){grid-column:span 2;grid-row:span 2}
+.g-item img,.g-item .photo-ph{width:100%;height:100%;object-fit:cover;transition:transform .55s ease}
+.g-item:hover img,.g-item:hover .photo-ph{transform:scale(1.05)}
+.g-caption{position:absolute;bottom:0;left:0;right:0;padding:.9rem 1rem;background:linear-gradient(transparent,rgba(0,0,0,.85));font-size:.78rem;letter-spacing:.08em;opacity:0;transition:opacity .3s}
+.g-item:hover .g-caption{opacity:1}
+
+/* CONTACT */
+#contact .section-title{max-width:none;margin:0 auto 1rem}
+#contact .section-body{margin:0 auto 3rem}
+.contact-links{display:flex;gap:1.2rem;justify-content:center;flex-wrap:wrap}
+.contact-link{padding:.85rem 2rem;border:1px solid var(--border);color:var(--text);text-decoration:none;font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;transition:border-color .25s,background .25s,color .25s;cursor:none}
+.contact-link:hover{border-color:var(--red);background:var(--red);color:#fff}
+
+/* FOOTER */
+footer{border-top:1px solid var(--border);padding:1.8rem 4rem;display:flex;justify-content:space-between;align-items:center;font-size:.72rem;color:var(--muted)}
+
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(36px);transition:opacity .75s ease,transform .75s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+
+@media(max-width:900px){
+  nav{padding:1.2rem 1.5rem}
+  #hero,#about,#gallery,#contact{padding-left:1.5rem;padding-right:1.5rem}
+  .hero-photo{display:none}
+  .about-grid{grid-template-columns:1fr;gap:2.5rem}
+  .gallery-grid{grid-template-columns:1fr 1fr}
+  .g-item:nth-child(1){grid-column:span 2}
+  footer{flex-direction:column;gap:.8rem;text-align:center;padding:1.5rem}
+}
+@media(max-width:1200px){
+  .hero-photo{width:clamp(180px,20vw,280px)}
+  #hero{padding-right:clamp(200px,28vw,340px)}
+  .hero-title{font-size:clamp(3rem,7vw,7rem)}
+  .hero-sub{max-width:380px;font-size:.9rem}
+}
+img{max-width:100%}
+.hero-photo img{width:100%;height:100%;object-fit:cover}
+.about-photo img{width:100%;height:100%;object-fit:cover}
+.g-item{min-height:150px}
+.g-item img{width:100%;height:100%;min-height:150px;object-fit:cover}
+</style>
+</head>
+<body>
+
+<div id="cur"></div>
+<div id="cur-ring"></div>
+
+<!-- ════════════════════════════════
+     HOW TO ADD YOUR PHOTOS
+     ════════════════════════════════
+  1. Put your image files (.jpg or .png) in the SAME folder as this .html file
+  2. Find the <div class="photo-ph"> you want to replace
+  3. Delete the entire <div class="photo-ph">...</div> block
+  4. Replace it with: <img src="yourfilename.jpg" alt="description">
+  
+  Example — changing the hero photo:
+    BEFORE: <div class="photo-ph">...</div>
+    AFTER:  <img src="band-photo.jpg" alt="Rammstein Aus Roblox">
+  ════════════════════════════════ -->
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">Rammstein<br>Aus Roblox</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- ══ HERO ══ -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-scratch"></div>
+
+  <p class="hero-eyebrow">Live · In Roblox · Feuer Frei</p>
+
+  <h1 class="hero-title">
+    RAMMSTEIN<br>
+    <span class="accent">AUS ROBLOX</span>
+  </h1>
+
+  <p class="hero-sub">
+    Born from fire and pixels. We bring the raw energy of Rammstein
+    straight into Roblox — live concerts, chaos, and heavy music.
+    Wir sind hier.
+  </p>
+
+  <a href="#about" class="hero-cta">Who We Are</a>
+
+  <!-- HERO PHOTO
+       Replace the photo-ph div below with:
+       <img src="yourphoto.jpg" alt="Rammstein Aus Roblox">  -->
+  <div class="hero-photo">
+    <img src="Photo.webp" alt="Rammstein Aus Roblox">
+  </div>
+</section>
+
+<div class="fire-divider"></div>
+
+<!-- ══ ABOUT ══ -->
+<section id="about">
+  <p class="section-label reveal">About</p>
+
+  <div class="about-grid">
+
+    <!-- ABOUT PHOTO
+         Replace the photo-ph div with:
+         <img src="yourphoto.jpg" alt="About">  -->
+    <div class="about-photo reveal">
+      <img src="Photo2.jpg" alt="Stage">
+    </div>
+
+    <div class="reveal">
+      <h2 class="section-title">We Are <span class="accent">Rammstein<br>Aus Roblox</span></h2>
+      <div class="divider"></div>
+      <p class="section-body">
+        Rammstein Aus Roblox is a band born inside Roblox, inspired by the legendary
+        German metal group Rammstein. We came together with one goal — to bring the
+        fire of Rammstein's live shows into the virtual world.
+      </p>
+      <p class="section-body" style="margin-top:1.3rem">
+        We perform live concerts inside Roblox, recreating the energy, the pyrotechnics,
+        and the raw power of a real show. Whether you're a longtime Rammstein fan
+        or just found us — you're welcome in the pit.
+      </p>
+      <p class="section-body" style="margin-top:1.3rem">
+        <!-- ✏ Edit: add your Discord server info here -->
+        Join our Discord community to stay updated on upcoming concerts,
+        behind-the-scenes content, and everything happening in our Roblox world.
+      </p>
+
+      <!-- ══ BAND MEMBERS
+           For each member:
+           - Change the name inside .member-name
+           - Change the role inside .member-role
+           - Replace photo-ph with <img src="member.jpg" alt="name">
+           - Add or remove .member-card blocks as needed  ══ -->
+      <div class="members">
+
+        <div class="member-card">
+          <div class="member-avatar">
+            <!-- Replace with: <img src="till.jpg" alt="Till"> -->
+            <div class="photo-ph" style="min-height:56px;border:none;padding:0">
+              <svg viewBox="0 0 24 24" stroke-width="1.5" style="width:22px;height:22px"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+            </div>
+          </div>
+          <div class="member-name">Till Lindemann</div>
+          <div class="member-role">Vocals</div>
+        </div>
+
+        <div class="member-card">
+          <div class="member-avatar">
+            <!-- Replace with: <img src="richard.jpg" alt="Richard"> -->
+            <div class="photo-ph" style="min-height:56px;border:none;padding:0">
+              <svg viewBox="0 0 24 24" stroke-width="1.5" style="width:22px;height:22px"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+            </div>
+          </div>
+          <div class="member-name">Richard Z. Kruspe</div>
+          <div class="member-role">Lead Guitar</div>
+        </div>
+
+        <div class="member-card">
+          <div class="member-avatar">
+            <!-- Replace with: <img src="paul.jpg" alt="Paul"> -->
+            <div class="photo-ph" style="min-height:56px;border:none;padding:0">
+              <svg viewBox="0 0 24 24" stroke-width="1.5" style="width:22px;height:22px"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+            </div>
+          </div>
+          <div class="member-name">Paul Landers</div>
+          <div class="member-role">Rhythm Guitar</div>
+        </div>
+
+        <div class="member-card">
+          <div class="member-avatar">
+            <!-- Replace with: <img src="oliver.jpg" alt="Oliver"> -->
+            <div class="photo-ph" style="min-height:56px;border:none;padding:0">
+              <svg viewBox="0 0 24 24" stroke-width="1.5" style="width:22px;height:22px"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+            </div>
+          </div>
+          <div class="member-name">Oliver Riedel</div>
+          <div class="member-role">Bass</div>
+        </div>
+
+        <div class="member-card">
+          <div class="member-avatar">
+            <!-- Replace with: <img src="christoph.jpg" alt="Christoph"> -->
+            <div class="photo-ph" style="min-height:56px;border:none;padding:0">
+              <svg viewBox="0 0 24 24" stroke-width="1.5" style="width:22px;height:22px"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+            </div>
+          </div>
+          <div class="member-name">Christoph Schneider</div>
+          <div class="member-role">Drums</div>
+        </div>
+
+        <div class="member-card">
+          <div class="member-avatar">
+            <!-- Replace with: <img src="flake.jpg" alt="Flake"> -->
+            <div class="photo-ph" style="min-height:56px;border:none;padding:0">
+              <svg viewBox="0 0 24 24" stroke-width="1.5" style="width:22px;height:22px"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+            </div>
+          </div>
+          <div class="member-name">Christian "Flake" Lorenz</div>
+          <div class="member-role">Keyboards</div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="fire-divider"></div>
+
+<!-- ══ GALLERY ══ -->
+<section id="gallery">
+  <p class="section-label reveal">Gallery</p>
+  <h2 class="section-title reveal">Concert <span class="accent">Moments</span></h2>
+
+  <div class="gallery-grid reveal">
+
+    <!-- PHOTO 1 — large (spans 2 cols + 2 rows)
+         Replace photo-ph with: <img src="concert1.jpg" alt="Concert"> -->
+    <div class="g-item">
+      <img src="Sonne.png" alt="Sonne">
+      <div class="g-caption">Live at Roblox — Main Stage</div>
+    </div>
+
+    <div class="g-item">
+      <img src="Feuer.png" alt="Feuer">
+      <div class="g-caption">The Crowd</div>
+    </div>
+
+    <div class="g-item">
+      <img src="Hast.png" alt="Du Hast">
+      <div class="g-caption">Du Hast</div>
+    </div>
+
+    <div class="g-item">
+      <img src="Band.png" alt="Band">
+      <div class="g-caption">Behind the Scenes</div>
+    </div>
+
+    <!-- PHOTO 5 -->
+    <div class="g-item">
+      <img src="Stage.png" alt="Stage">
+      <div class="g-caption">Du Hast</div>
+    </div>
+
+  </div>
+</section>
+
+<div class="fire-divider"></div>
+
+<!-- ══ CONTACT ══ -->
+<section id="contact">
+  <p class="section-label reveal">Find Us</p>
+  <h2 class="section-title reveal">Join The <span class="accent">Pit</span></h2>
+  <p class="section-body reveal">
+    Stay updated on our next Roblox concert, join the community,
+    or just come say Hallo. We don't bite — much.
+  </p>
+  <div class="contact-links reveal">
+    <!-- ✏ Edit: replace # with your actual links -->
+    <a href="https://discord.gg/nknYx7wKT2" class="contact-link" target="_blank">Discord</a>
+    <a href="#" class="contact-link">Roblox Group</a>
+    <a href="#" class="contact-link">VK</a>
+    <a href="#" class="contact-link">Telegram</a>
+  </div>
+</section>
+
+<footer>
+  <span>© 2026 Rammstein Aus Roblox</span>
+  <span style="color:var(--red);letter-spacing:.15em;font-size:.7rem">FEUER FREI ✦ ROBLOX</span>
+</footer>
+
+<script>
+/* Custom cursor */
+const cur=document.getElementById('cur');
+const ring=document.getElementById('cur-ring');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY});
+(function loop(){
+  cur.style.transform=`translate(${mx}px,${my}px) translate(-50%,-50%)`;
+  rx+=(mx-rx)*.11;ry+=(my-ry)*.11;
+  ring.style.transform=`translate(${rx}px,${ry}px) translate(-50%,-50%)`;
+  requestAnimationFrame(loop);
+})();
+
+/* Scroll reveal */
+const els=document.querySelectorAll('.reveal');
+const io=new IntersectionObserver(entries=>{
+  entries.forEach((e,i)=>{
+    if(e.isIntersecting){setTimeout(()=>e.target.classList.add('visible'),i*70);io.unobserve(e.target)}
+  });
+},{threshold:.1});
+els.forEach(el=>io.observe(el));
+</script>
+</body>
+</html>
